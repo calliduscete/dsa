@@ -27,7 +27,7 @@ Students and beginners learning DSA, and anyone revising for exams or interviews
 
 1. Install the JDK (version 17 or later).
 2. Clone the repo:
-   `git clone https://github.com/your-username/your-repo.git`
+   `git clone https://github.com/calliduscete/dsa.git`
 3. Go into a topic folder, then compile and run a file:
    `javac Example.java`
    `java Example`
