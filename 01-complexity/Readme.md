@@ -56,58 +56,87 @@ You may also see two related terms:
 
 ## Examples
 
-```python
-def get_first(arr):
-    # O(1): one step, no matter how big the array is
-    return arr[0]
+```java
+public class TimeComplexityExamples {
 
+    // O(1): one step, no matter how big the array is
+    static int getFirst(int[] arr) {
+        return arr[0];
+    }
 
-def find_max(arr):
-    # O(n): looks at every element once
-    best = arr[0]
-    for x in arr:
-        if x > best:
-            best = x
-    return best
+    // O(n): looks at every element once
+    static int findMax(int[] arr) {
+        int best = arr[0];
+        for (int x : arr) {
+            if (x > best) {
+                best = x;
+            }
+        }
+        return best;
+    }
 
+    // O(n^2): compares every pair of elements
+    static boolean hasDuplicate(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] == arr[j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-def has_duplicate(arr):
-    # O(n^2): compares every pair of elements
-    for i in range(len(arr)):
-        for j in range(i + 1, len(arr)):
-            if arr[i] == arr[j]:
-                return True
-    return False
+    // O(log n): halves the search range each step (arr must be sorted)
+    static int binarySearch(int[] arr, int target) {
+        int low = 0;
+        int high = arr.length - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] == target) {
+                return mid;
+            } else if (arr[mid] < target) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return -1;
+    }
 
-
-def binary_search(arr, target):
-    # O(log n): halves the search range each step (arr must be sorted)
-    low, high = 0, len(arr) - 1
-    while low <= high:
-        mid = (low + high) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            low = mid + 1
-        else:
-            high = mid - 1
-    return -1
+    public static void main(String[] args) {
+        int[] nums = {2, 5, 8, 12, 16, 23};
+        System.out.println(getFirst(nums));          // 2
+        System.out.println(findMax(nums));           // 23
+        System.out.println(hasDuplicate(nums));      // false
+        System.out.println(binarySearch(nums, 12));  // 3
+    }
+}
 ```
 
 ## Space complexity examples
 
-```python
-def sum_list(arr):
-    # O(1) extra space: only one variable is used
-    total = 0
-    for x in arr:
-        total += x
-    return total
+```java
+public class SpaceComplexityExamples {
 
+    // O(1) extra space: only one variable is used
+    static int sumArray(int[] arr) {
+        int total = 0;
+        for (int x : arr) {
+            total += x;
+        }
+        return total;
+    }
 
-def double_list(arr):
-    # O(n) extra space: builds a new list the same size as the input
-    return [x * 2 for x in arr]
+    // O(n) extra space: builds a new array the same size as the input
+    static int[] doubleArray(int[] arr) {
+        int[] result = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            result[i] = arr[i] * 2;
+        }
+        return result;
+    }
+}
 ```
 
 ## Practice questions
@@ -115,39 +144,47 @@ def double_list(arr):
 What is the time complexity of each snippet?
 
 **1.**
-```python
-for i in range(n):
-    print(i)
+```java
+for (int i = 0; i < n; i++) {
+    System.out.println(i);
+}
 ```
 
 **2.**
-```python
-for i in range(n):
-    for j in range(n):
-        print(i, j)
+```java
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+        System.out.println(i + " " + j);
+    }
+}
 ```
 
 **3.**
-```python
-i = 1
-while i < n:
-    i *= 2
+```java
+int i = 1;
+while (i < n) {
+    i *= 2;
+}
 ```
 
 **4.**
-```python
-for i in range(n):
-    print(i)
-for j in range(n):
-    print(j)
+```java
+for (int i = 0; i < n; i++) {
+    System.out.println(i);
+}
+for (int j = 0; j < n; j++) {
+    System.out.println(j);
+}
 ```
 
 **5.**
-```python
-def fib(n):
-    if n <= 1:
-        return n
-    return fib(n - 1) + fib(n - 2)
+```java
+static int fib(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fib(n - 1) + fib(n - 2);
+}
 ```
 
 <details>
