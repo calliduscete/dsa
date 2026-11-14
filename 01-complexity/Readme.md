@@ -116,28 +116,115 @@ public class TimeComplexityExamples {
 
 ## Space complexity examples
 
+Space complexity counts the **extra memory** an algorithm creates as `n` grows. The input itself is not counted. Here is one small snippet for each common class.
+
+### O(1): constant space
+
+No new structure that depends on `n`, only a few variables.
+
 ```java
-public class SpaceComplexityExamples {
-
-    // O(1) extra space: only one variable is used
-    static int sumArray(int[] arr) {
-        int total = 0;
-        for (int x : arr) {
-            total += x;
-        }
-        return total;
+static int sum(int[] arr) {
+    int total = 0;                  // one variable, however long arr is
+    for (int x : arr) {
+        total += x;
     }
-
-    // O(n) extra space: builds a new array the same size as the input
-    static int[] doubleArray(int[] arr) {
-        int[] result = new int[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            result[i] = arr[i] * 2;
-        }
-        return result;
-    }
+    return total;
 }
 ```
+
+Comparing two arrays that already exist is also O(1) extra space:
+
+```java
+static boolean sameContents(int[] a, int[] b) {
+    return Arrays.equals(a, b);     // creates nothing new
+}
+```
+
+### O(log n): logarithmic space
+
+Usually recursion that halves the input, because only about log n calls are waiting at once.
+
+```java
+static int binarySearch(int[] arr, int target, int low, int high) {
+    if (low > high) {
+        return -1;
+    }
+    int mid = low + (high - low) / 2;
+    if (arr[mid] == target) {
+        return mid;
+    } else if (arr[mid] < target) {
+        return binarySearch(arr, target, mid + 1, high);   // each call waits on the stack
+    }
+    return binarySearch(arr, target, low, mid - 1);
+}
+```
+
+### O(n): linear space
+
+You create something whose size grows with `n`. Two arrays of size `n` is still O(n): the space is 2n, and we drop the constant.
+
+```java
+static boolean compareTwoArrays(int n) {
+    int[] array1 = new int[n];      // n cells
+    int[] array2 = new int[n];      // n more cells: 2n in total, which is O(n)
+    return Arrays.equals(array1, array2);
+}
+```
+
+Other O(n) examples: copying an array, a `HashSet` of the values seen so far, or a recursion that goes `n` levels deep.
+
+```java
+static int[] doubleArray(int[] arr) {
+    int[] result = new int[arr.length];   // new array the same size as the input
+    for (int i = 0; i < arr.length; i++) {
+        result[i] = arr[i] * 2;
+    }
+    return result;
+}
+```
+
+### O(n²): quadratic space
+
+A 2D table where both sides depend on `n`.
+
+```java
+static int[][] makeGrid(int n) {
+    return new int[n][n];           // n rows of n cells = n * n cells
+}
+```
+
+Examples: an adjacency matrix, or the table in edit distance.
+
+### O(n³): cubic space
+
+A 3D table. This is rare, and it gets huge quickly.
+
+```java
+static int[][][] makeCube(int n) {
+    return new int[n][n][n];        // n * n * n cells
+}
+```
+
+### Which parts count?
+
+When an algorithm creates several things, **add them up and keep the biggest term**, just like with time complexity.
+
+```java
+int[] a = new int[n];               // n
+int[] b = new int[n];               // n
+int[][] grid = new int[n][n];       // n * n
+// total: n + n + n^2 -> O(n^2)
+```
+
+### Space complexity summary
+
+| Space | You create... | Example |
+|---|---|---|
+| O(1) | A few variables | Sum with a loop, two pointers |
+| O(log n) | Recursion that halves the input | Recursive binary search |
+| O(n) | One array, set or map of size `n` (or recursion `n` deep) | Copying an array, hash set of seen values |
+| O(n²) | An `n x n` table | Adjacency matrix, edit distance table |
+| O(n³) | An `n x n x n` table | 3D grid, LCS of three strings |
 
 ## Practice questions
 
